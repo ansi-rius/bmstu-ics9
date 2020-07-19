@@ -1,0 +1,10 @@
+(define (count x xs)
+  (define (iter help ys) 
+     (cond ((null? ys) help)
+           (else (if (equal? x (car ys)) (iter (+ 1 help) (cdr ys))
+            (iter help (cdr ys))))))
+   (iter 0 xs))
+
+(count 'a '(a b c a))
+(count 'b '(a c d))
+(count 'a '())

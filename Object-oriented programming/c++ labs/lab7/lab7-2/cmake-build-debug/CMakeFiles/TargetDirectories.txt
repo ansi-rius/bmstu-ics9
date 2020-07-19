@@ -1,0 +1,3 @@
+/Users/anemone/Documents/plusiki/lab 7/lab7-2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/anemone/Documents/plusiki/lab 7/lab7-2/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/anemone/Documents/plusiki/lab 7/lab7-2/cmake-build-debug/CMakeFiles/lab7_2.dir

@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/anemone/Documents/plusiki/lab 7/lab7-2/declaration.h
+iostream
+-
+
+/Users/anemone/Documents/plusiki/lab 7/lab7-2/implementation.cpp
+algorithm
+-
+declaration.h
+/Users/anemone/Documents/plusiki/lab 7/lab7-2/declaration.h
+
+/Users/anemone/Documents/plusiki/lab 7/lab7-2/main.cpp
+iostream
+-
+declaration.h
+/Users/anemone/Documents/plusiki/lab 7/lab7-2/declaration.h
+

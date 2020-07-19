@@ -1,0 +1,98 @@
+(define (check_number? char)
+  (and (> (char->integer char) 47) (< (char->integer char) 58)))
+
+(define =? eq?)
+
+(define (sign? char)
+  (or (=? char #\+) (=? char #\-)))
+
+(define (check-frac str)
+  (define (parse str)
+    (if (and (not (null? str)) (check_number? (car str)))
+        (parse (cdr str))
+        (if (null? str)
+            (= 1 1)
+            (if (=? (car str) #\/ )
+                (parse (cdr str))
+                (= 1 2)))))
+  (if (=? (memq #\/ (string->list str)) #f)
+      (memq #\/ (string->list str))
+      (if (sign? (car (string->list str)))
+          (parse (cdr (string->list str)))
+          (parse (string->list str)))))
+
+(check-frac "+110/111")
+(check-frac "-4/3")
+(check-frac "5.0/10")
+(check-frac "FF/10")
+
+
+(define (scan-frac str)
+  (cond ((check-frac str) (begin (display str) (newline)))
+        (else #f)))
+
+
+(define (scana-frac str)
+  (define (parse-value str value)
+    (if (and (not (null? str)) (check_number? (car str)))
+        (parse-value (cdr str)
+                     (append value (list (- (char->integer (car str)) 48))))
+        value))
+  
+  (define (fold list value i)
+    (if (not (null? list))
+        (fold (cdr list)
+              (+ value (* (car list) (expt 10 i))) (+ i 1))
+        value))
+  
+  (if (=? (memq #\/ (string->list str)) #f)
+      (memq #\/ (string->list str))
+      (if (sign? (car (string->list str)))
+          (if (=? (car (string->list str)) #\+)
+              (/(fold (reverse (parse-value (cdr (string->list str))
+                                            '())) 0 0)
+                (fold (reverse(parse-value (cdr (memq #\/ (string->list str)))
+                                           '())) 0 0))
+              
+              (-(/ (fold (parse-value (cdr (string->list str))) 0 0)
+                   (fold (parse-value (cdr (memq #\/ (string->list str)))) 0 0))))
+          (/ (fold (reverse(parse-value (string->list str)
+                                        '())) 0 0)
+             (fold (reverse (parse-value (cdr (memq #\/ (string->list str)))
+                                         '())) 0 0)))))
+
+(define (easy-scan-frac str)
+  (if (check-frac str)
+      str
+      (= 1 0)))
+
+;(easy-scan-frac "110/111")
+(scan-frac "110/111")
+(scan-frac "+5/10")
+
+(define (space_symbol? char)
+  (or (=? char #\space) (or (=? char #\tab) (=? char #\newline))))
+
+(define (scan-many-fracs str)
+  (define (parser list)
+    (if (null? list)
+        '()
+        (if (check-frac (car list))
+            (cons (scan-frac (car list)) (parser (cdr list)))
+            (= 1 0))))
+  
+  (define (parse_values stack_number stack str)
+    (cond ((and (null? str) (null? stack)) (parser stack_number))
+          ((null? str) (parser (append stack_number (list (list->string stack)))))
+          ((and (space_symbol? (car str)) (not (null? stack)))
+           (parse_values (append stack_number (list (list->string stack))) '() (cdr str)))
+          ((space_symbol? (car str)) (parse_values stack_number stack (cdr str)))
+          ((or (or (check_number? (car str)) (=? (car str) #\/))
+               (and (null? stack) (sign? (car str))))
+           (parse_values stack_number (append stack (list (car str))) (cdr str)))
+          (else (= 1 2))))
+  (parse_values '()'()  (string->list str)))
+
+(scan-many-fracs "\t1/2 1/3\n\n10/8")
+(scan-many-fracs "\t1/2 1/3\n\n2/-5")
+(scan-many-fracs "\t1/3 1/5\n\n10/24 1/2")
