@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Medicine helper</title>
+        <script src="/static/script.js"></script>
+        <style type="text/css">
+            /* скрываем чекбоксы и блоки с содержанием */
+            .hide {
+                display: none; 
+            }
+            .hide + label ~ div{
+                display: none;
+            }
+            /* оформляем текст label */
+            .hide + label {
+                border-bottom: 2px dotted #006400;
+                padding: 0;
+                color: #006400;
+                cursor: pointer;
+                display: inline-block; 
+                font-size: 30px;
+                margin: 1% 1%;
+            }
+            /* вид текста label при активном переключателе */
+            .hide:checked + label {
+                color: red;
+                border-bottom: 0;
+            }
+            /* когда чекбокс активен показываем блоки с содержанием  */
+            .hide:checked + label + div {
+                display: block; 
+                background: #efefef;
+                -moz-box-shadow: inset 3px 3px 10px #2F4F4F;
+                -webkit-box-shadow: inset 3px 3px 10px #2F4F4F;
+                box-shadow: inset 3px 3px 10px #2F4F4F;
+                padding: 30px; 
+            }
+
+            /* demo контейнер */
+            .demo {
+                margin: 5% 10%;
+                border: 5px solid #2a3c3c;
+                background: #eee;
+
+            }
+
+        </style>
+    </head>
+    <body>
+        <div>
+            <br>
+            <br>
+            <p></p>
+        </div>
+        {{range . }}
+        <table>
+            <thead><th><label style="font-size: 50px; color: #FFFFFF; padding: 2%"> {{.MedName}} </label></th></thead>
+            <tr>
+                <td>
+                    <input type="checkbox" id={{.IDMedicineID}} class="hide"/>
+                    <label class="l2" for={{.IDMedicineID}} >ID лекарства</label>
+                    <div class="d2">
+                        {{.MedicineID}}
+                    </div>
+                    <br/>
+                    <br/>
+                    <input type="checkbox" id={{.IDMedName}} class="hide"/>
+                    <label class="l2" for={{.IDMedName}} chaecked>Торговое наименование препарата</label>
+                    <div class="d2">
+                        {{.MedName}}
+                    </div>
+                    <br/>
+                    <br/>
+                    <input type="checkbox" id={{.IDInternationalName}} class="hide"/>
+                    <label class="l2" for={{.IDInternationalName}} >Международное наименование</label>
+                    <div class="d2">
+                        {{.InternationalName}}
+                    </div>
+                    <br/>
+                    <br/>
+                    <input type="checkbox" id={{.IDPharmacotherapeuticGroup}} class="hide"/>
+                    <label class="l2" for={{.IDPharmacotherapeuticGroup}}>Фармакотерапевтическая группа</label>
+                    <div class="d2">
+                        {{.PharmacotherapeuticGroup}}
+                    </div>
+                    <br/>
+                    <br/>
+                    <input type="checkbox" id={{.IDPharmacologicalProperties}} class="hide"/>
+                    <label class="l2" for={{.IDPharmacologicalProperties}}>Фармакологические свойства</label>
+                    <div class="d2">
+                        {{.PharmacologicalProperties}}
+                    </div>
+                    <br/>
+                    <br/>
+                    <input type="checkbox" id={{.IDCaution}} class="hide"/>
+                    <label class="l2" for={{.IDCaution}} checked>С осторожностью</label>
+                    <div class="d2">
+                        {{.Caution}}
+                    </div>
+                    <br/>
+                    <br/>
+                    <input type="checkbox" id={{.IDHowToUse}} class="hide"/>
+                    <label class="l2" for={{.IDHowToUse}}>Способ применения</label>
+                    <div class="d2">
+                        {{.HowToUse}}
+                    </div>
+                    <br/>
+                    <br/>
+                    <input type="checkbox" id={{.IDReceipt}} class="hide"/>
+                    <label class="l2" for={{.IDReceipt}}>Условия отпуска из аптек</label>
+                    <div class="d2">
+                        {{.Receipt}}
+                    </div>
+                    
+                </td>
+            </tr>
+            {{end}}
+        </table>
+    </body>
+</html>

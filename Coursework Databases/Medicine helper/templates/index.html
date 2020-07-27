@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Medicine helper</title>
+        <script src="/static/script.js"></script>
+        <style type="text/css">
+
+            .line-block {
+                background: #eee;
+                float: left;
+                width: 350px;
+                height: 390px;
+                margin: 0 1% 2% 0;
+                padding: 10px;
+                border: 2px solid #2a3c3c;
+            }
+
+            .box {
+                background: #C0C4CD;
+                opacity: 1;
+                padding: 40px;
+                padding-top: 60px;
+                float: left;
+                width: 100%;
+                height: 50vh;
+                margin-right: 2%;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+            body{
+                background: #C0C4CD;
+                margin: 0px;
+            }
+
+            .header {
+                padding: 10px; /* Поля вокруг текста */
+                text-align: center;
+                background: linear-gradient(to top, #C0C4CD, #2F4F4F);
+                opacity: 1;
+                width: 100%;
+                height: 100px;
+                font-family: 'Comic Sans MS'
+               }
+
+            .word {  
+                background: #f0f0f0;
+                font-size: 18px;
+                -moz-hyphens: auto;
+                -webkit-hyphens: auto;
+                -ms-hyphens: auto;
+            }
+
+            select, option {
+                width: 350px; /* Ширина списка в пикселах */
+                word-wrap: break-word;
+                white-space: pre-wrap;
+                border: 1px solid #C0C4CD;
+            }
+
+            select {
+                height: 250px;
+            }
+
+            option {
+                padding: 3%;
+                font-size: 18px;
+                size: 150px;
+            }
+
+            td {
+                text-align: center;
+                vertical-align: top;
+                width: 210px ;
+                height: 200px;
+            }
+
+            .startFont {
+                font-weight: 600;
+                font-size: 25px;
+                text-align: center;
+            }
+
+            .submitbtn {
+                width: 100px;
+                height: 40px;
+                font-size: 20px;
+                font-weight: 600;
+            }
+
+            .l1, .mainDatalist{
+                width: 290px;
+                height: 35px;
+            }
+
+            label {
+                font-size: 23px;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="header">
+            <h1 style="font-weight: 600;">Medicine Helper</h1>
+            <p>Введите данные о пациенте чтобы проверить корректность схемы лечения</p>
+        </div>
+
+
+        <form method="POST">
+            <div class="box">
+                <div class="line-block">
+                    <p class="startFont">Укажите заболевание</p>
+                    <input class="mainDatalist" type="text" name="disease" list="l1"/><br><br>
+                    <datalist class="l1" id="l1">
+                        <option  value="Инсульт, не уточненный как кровоизлияние или инфаркт"></option>
+                        <option value="Туберкулез органов дыхания, подтвержденный бактериологически и гистологически"></option>
+                        <option value="Сахарный диабет"></option>
+                    </datalist>
+                    <input class="submitbtn" type="submit" value="Send" onclick="disableAll()" />
+                </div>
+
+                <div class="line-block">
+                    <p class="startFont">Возраст:</p>
+                    <hr  width="95%" class="hr_age" size="2" color="#596868" align="center" />
+                    <label>Детский возраст до 12 лет</label><br>
+                    <input id="age" type="radio" name="age" value="Детский возраст до 12 лет"/><br><br>
+                    <label>Подростковый возраст от 12 лет до 18 лет</label><br>
+                    <input id="age" type="radio" name="age" value="Подростковый возраст от 12 лет до 18 лет"/><br><br>
+                    <label>Взрослый возраст от 19 лет до 60 лет</label><br>
+                    <input id="age" type="radio" name="age" value="Взрослый возраст от 19 лет до 60 лет" /><br><br>
+                    <label>Старческий возраст от 61 лет</label><br>
+                    <input id="age" type="radio" name="age" value="Старческий возраст от 61 лет" /><br><br>
+                </div>
+
+                <div class="line-block">
+                    <p class="startFont">Пол:</p>
+                    <hr  width="95%" class="hr_age" size="2" color="#596868" align="center" />
+                    <label>Мужчина</label><br>
+                    <input type="radio" name="gender" onclick="disablePregnantButtons()"/><br><br>
+                    <label>Женщина</label><br>
+                    <input type="radio" name="gender" onclick="availablePregnantButtons()"/><br><br>
+                </div>
+
+                <div class="line-block">
+                    <p class="startFont">Положение:</p>
+                    <hr  width="95%" class="hr_age" size="2" color="#596868" align="center" />
+                    <label>Беременна</label><br>
+                    <input type="radio" id="pregnant" name="preg" value="Беременность" /><br><br>
+                    <label>Кормящая</label><br>
+                    <input type="radio" size="50px" id="feeding" name="preg" value="Период грудного вскармливания"/><br><br>
+                    <label>Отмена выбора</label><br>
+                    <input type="radio" id="notPregnant" name="preg" value="Не беременна" /><br><br>
+                </div>
+
+                <div class="line-block">
+                    <p class="startFont">Укажите сопутствующие заболевания</p>
+                    <select name="contra" multiple>
+                        <option value="Сахарный диабет">Сахарный диабет</option><br>
+                        <option value="Инсульт, не уточненный как кровоизлияние или инфаркт">Инсульт, не уточненный как кровоизлияние или инфаркт</option>
+                        <option value="Туберкулез органов дыхания, подтвержденный бактериологически и гистологически">Туберкулез органов дыхания, подтвержденный бактериологически и гистологически</option><br>
+                    </select>
+                </div>
+
+                <div class="line-block">
+                    <p class="startFont">Укажите особенности организма</p>
+                    <select name="features" multiple>
+                        <option value="Почечная недостаточность">Почечная недостаточность</option><br>
+                        <option value="Печеночная недостаточность">Печеночная недостаточность</option><br>
+                        <option value="Наличие в анамнезе ангионевротического отека">Наличие в анамнезе ангионевротического отека</option><br>
+                    </select>
+                </div>
+
+                <div class="line-block">
+                    <p class="startFont">Укажите выписанные лекарства</p>
+                    <select name="medicines" multiple>
+                        <option value="N07XX">Мексидол - N07XX</option><br>
+                        <option value="R05C">Аскорил - R05C</option><br>
+                        <option value="A10AB01">Ринсулин® Р - A10AB01</option><br>
+                    </select>
+                </div>
+
+            </div>
+        </form>
+
+
+
+            <!--<label>Инсульт, не уточненный как кровоизлияние или инфаркт</label><br>
+            <input type="checkbox" name="insult" /><br><br>
+            <label>Туберкулез органов дыхания, подтвержденный бактериологически и гистологически</label><br>
+            <input type="checkbox" name="tub" /><br><br>-->
+
+
+        
+
+    </body>
+</html>
+

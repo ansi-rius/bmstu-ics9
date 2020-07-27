@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Medicine helper</title>
+        <link rel="stylesheet" type="text/css" href="/static/style.css">
+        <script src="/static/script.js"></script>
+    </head>
+    <body>
+        <div>
+            <br>
+            <br>
+            <p></p>
+        </div>
+        <table>
+            <thead><th>ID болезни</th><th>Название болезни</th><th>Иные названия</th><th>Риск заболеть выше у лиц</th><th>Причины заболевания</th><th>Симптомы</th><th>Диагностика</th><th>Осложнения</th></thead>
+            {{range . }}
+            <tr>
+                <td>{{.DiseaseID}}</td>
+                <td>{{.DiseaseName}}</td>
+                <td>{{.AlternativeNames}}</td>
+                <td>{{.RiskGroup}}</td>
+                <td>{{.Cause}}</td>
+                <td>{{.Symptoms}}</td>
+                <td>{{.Diagnostics}}</td>
+                <td>{{.Complications}}</td>
+            </tr>
+            {{end}}
+        </table>
+        
+
+    </body>
+</html>
+

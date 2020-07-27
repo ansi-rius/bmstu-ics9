@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Medicine helper</title>
+        <link rel="stylesheet" type="text/css" href="/static/style.css">
+        <script src="/static/script.js"></script>
+    </head>
+    <body>
+        <div>
+            <br>
+            <br>
+            <p></p>
+        </div>
+        <table>
+            <thead><th>ID лекарства</th><th>Торговое наименование препарата</th><th>Международное наименование</th><th>Фармакотерапевтическая группа</th><th>Фармакологические свойства</th><th>С осторожностью</th><th>Способ применения</th><th>Условия отпуска из аптек</th></thead>
+            {{range . }}
+            <tr>
+                <td>{{.MedicineID}}</td>
+                <td>{{.MedName}}</td>
+                <td>{{.InternationalName}}</td>
+                <td>{{.PharmacotherapeuticGroup}}</td>
+                <td>{{.PharmacologicalProperties}}</td>
+                <td>{{.Caution}}</td>
+                <td>{{.HowToUse}}</td>
+                <td>{{.Receipt}}</td>
+            </tr>
+            {{end}}
+        </table>
+        
+
+    </body>
+</html>
+

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Medicine helper</title>
+        <script src="/static/script.js"></script>
+        <style type="text/css">
+            .tables {
+                margin-bottom: 100px;
+                padding-left: 50%;
+                padding-top: 45%;
+            }
+
+            .table1 {
+                text-align: bottom;
+            }
+
+            table {
+                border-spacing:0px 0px;
+                width: 100%;
+            }
+
+            th{
+                background: #2F4F4F;
+                color: white;
+                padding: 10px 20px;
+                font-size: 30px;
+            }
+
+            th, td {
+                border: 2px solid #2a3c3c;
+                padding: 15px;
+            }
+
+            td {
+                background: #eee;
+                font-size: 25px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="tables" height="50px">
+            <p class="table1"> </p>
+        </div>
+        <table>
+            <thead><th>ID класса болезни</th><th>Класс болезни</th><th>ID болезни</th><th>Название болезни</th></thead>
+            {{range . }}
+            <tr>
+                <td>{{.ClassID}}</td>
+                <td>{{.ClassName}}</td>
+                <td>{{.DiseaseID}}</td>
+                <td>{{.DiseaseName}}</td>
+            </tr>
+            {{end}}
+        </table>
+        <br>
+        <br>
+        <br>
+    </body>
+</html>
+
