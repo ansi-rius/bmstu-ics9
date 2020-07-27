@@ -1,6 +1,6 @@
-# bmstu-ics9 МГТУ им. Н.Э.Баумана -- ИУ9
+# bmstu-ics9 МГТУ им. Н.Э.Баумана - ИУ9
 
-## Theoretical Informatics and Computer Technologies -- Теоретическая информатика и компьютерные технологии
+## Theoretical Informatics and Computer Technologies - Теоретическая информатика и компьютерные технологии
 
 Only computer science subjects for now. Bachelor's degree. All reports are in russian, but will be translated in english soon.
 
