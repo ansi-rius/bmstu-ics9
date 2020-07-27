@@ -1,4 +1,4 @@
-# bmstu-ics9 МГТУ им. Н.Э.Баумана - ИУ9
+# BMSTU-ics9  - МГТУ им. Н.Э.Баумана - ИУ9
 
 ## Theoretical Informatics and Computer Technologies - Теоретическая информатика и компьютерные технологии
 
