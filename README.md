@@ -1,6 +1,6 @@
 # bmstu-ics9
 
-##Theoretical Informatics and Computer Technologies
+## Theoretical Informatics and Computer Technologies
 
 Only computer science subjects for now. Bachelor's degree. All reports are in russian, but will be translated in english soon.
 
