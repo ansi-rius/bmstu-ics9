@@ -1,0 +1,321 @@
+TURBO DEBUGGER 1.0: MANUAL ADDITIONS AND CORRECTIONS
+----------------------------------------------------
+
+The following documents changes to the manual that were made
+after it went to print. Please read this file and make the
+appropriate corrections in the Turbo Debugger User's Guide.
+
+Page
+
+8 End of page, add: "TD.OVL is the file containing the menu system
+  and must be available to TD whenever you use the menus. If
+  TD.OVL is not available when you load TD, an error message will
+  inform you of such. In addition, if you're loading from a disk,
+  the message will prompt you to insert the disk containing
+  TD.OVL."
+
+18 In the second and third bullets, delete "E" and add the
+   letters B and D.
+
+23 The third line in the third paragraph should read "...you have
+   a choice of four commands: Create, Remove, Delete All, and
+   Stop Recording".
+
+30 Add to the last sentence of "Resizing and Saving Windows":
+   "..from DOS if the configuration was saved to a file called
+   TDCONFIG.TD. This is the only configuration file that will be
+   loaded automatically when Turbo Debugger is loaded. Other
+   configurations can be loaded (saved in other files) by using
+   the Options/Restore Options selection in the main menu or
+   using the-c command line option when loading TD." See the
+   entry for page 52.
+
+34,35 At the end of p34 and the first sentence of p35, change
+      Alt-F R to Ctrl-F2.
+
+35 Last sentence of the second paragraph under "Using Turbo
+   Debugger" should read: "...File menu, in this case only the F1
+   and Esc keys appear.
+
+37 Replace the third paragraph with the following: There are a
+   number of ways to control the execution of your program, a
+   listing can be found in the Run menu. For instance, let's say
+   you wanted to execute the program until it reaches line 38.
+   First, position the cursor on line 38, then press F4, which
+   will run the program up to (but not including) line 38. Now
+   press F7, which executes one line of source code at a time; in
+   this case, it executes line 38, a call to the function
+   showargs. The cursor will immediately jump to line 150 where
+   the definition of showargs is found. Continuing to press F7
+   will step through the function showargs and then return you to
+   the line following the call--line 39. If you pressed F8
+   instead of F7 when positioned on line 38, the cursor would
+   have gone directly to line 39 not to the function. F8 is
+   similar to F7 except that it skips over any calls, but it
+   still executes them.
+
+37 Last line, first paragraph should read, "The arrow and cursor
+   are on the next executable line."
+
+39 Figure 3.4, change the contents of the Watches window to the following:
+
+     nwords                   unsigned int   2  (0x2)
+
+40 Last paragraph, 3rd line, modify to read: "An inspector
+   appears showing the values of the letterinfo array elements."
+   And add: "The first line under the title is the address in
+   main memory of the first element of the array letterinfo."
+   Note that this number will probably be different on your
+   system.
+
+41 In Figure 3.6, the title of the Inspector window should be
+   "Inspecting letterinfo[3]."
+
+   In the first line, modify it to read, "...name of the data you
+   are inspecting. The next...".
+
+   The Inspector window in Figure 3.6 should look like this:
+
+         Inspecting letterinfo        3
+         @5A51:08F4
+         [0]                      (1,1)
+         [1]                      (1,0)
+         [2]                      (1,0)
+         [3]                      (1,1)
+         [4]                      (1,0)
+         Inspecting letterinfo[3]     4
+         @5A51:0904
+         count                  1 (0x1)
+         firstletter            0 (0x1)
+         -----------------------------
+         struct linfo
+
+42 First paragraph after Figure 3.7, change the last line to
+   "...the new value, 10L (0xA)."
+
+   On the next paragraph, the last line: "Type argc and press
+   Enter, then press the Tab key twice to move to the line
+   labeled New Value. Type 123 and press Enter; the integer
+   result (second line) will change to int 123 (0x7B).
+
+48 Add to the second paragraph after Figure 3.13: "This will set
+   the variable NumLines equal to 123."
+
+51 In the first paragraph under "Running Turbo Debugger," add to
+   the end: "TD.OVL must be available for TD to call upon for its
+   menu system."
+
+52 Under "Command-Line Options," add the -c<filename> option.
+   This option loads the specified configuration file. If this
+   option isn't specified, TDCONFIG.TD is loaded, if it exists.
+   Here's an example:
+
+      TD -cMYCONF.TD TCDEMO
+
+   This loads the configuration file MYCONF.TD and the source
+   code for TCDEMO. A space cannot exist between -c and the file
+   name.
+
+53 Under the -m option, a space cannot exist between the -m and
+   the size of the heap; for example, TD -m64 TCDEMO.
+
+54 Under the -r Options, the default speed is 115 Kbaud.
+
+55 The bottom line should read, "...those default option values
+   and any values in TDCONFIG.TD."
+
+57 Under "Create," add to the end of the first paragraph: "To
+   begin a recording session, enter F10/Option/Macro/Create. You
+   will be prompted for the key you want to assign the macro to.
+   The message "Recording" is displayed in the upper right-hand
+   corner while the recording session is in progress.
+
+59 To the "Save Options Command" add: "Turbo Debugger allows you
+   to save your options in three ways:
+
+   All    - Saves all settings made in options, including
+              windows and macros
+   Layout - Saves only the windowing layout
+   Macros - Saves only the currently defined macros
+
+73 Add to the end of "Animate [Alt-F4]": "After activating Alt-
+   F4, you'll be prompted for a time delay between successive
+   traces. The time delay is in 10ths of a second; the default is 3".
+
+76 Add to "Keystroke Recording and Playback": Note: When a macro
+   is saved to a configuration file, the configuration of the
+   total environment is saved, including opened view windows and
+   zoomed windows. Thus if you record a macro that opens a view
+   window and don't close the window before saving it, the next
+   time you do a Restore of that configuration file, the window
+   will be automatically opened without executing the macro.
+
+82 After "Watch," add a new section: "Function Return" shows you
+   the value the current function is about to return. You can
+   only use this command when the function is about to return to
+   its caller.
+
+   The return value is displayed in an Inspector window, so you
+   can easily examine return values that are pointers to compound
+   data objects.
+
+   This command prevents you from having to switch to a CPU
+   window to examine the return value that is placed in the CPU
+   registers.
+
+85 The second line under "Watch," change "end" to "beginning."
+
+86 To the end of the third paragraph under "Inspector
+   Windows," add "..., unless it has been optimized to a register".
+
+110 The example at the end of the page should be "(long) a,4".
+
+111 Replace "TDH.SYS" with "TDH386.SYS" in the fifth paragraph.
+
+137 The second sentence in the last paragraph should read, "An
+    expression consists of a mixture of symbols, operators,
+    strings, variables, and constants."
+
+158,159 Change all occurrences of "I/O location" to "I/O port."
+
+171 At the top of page, replace lines 2-6 with the following:
+    "When assembling an instruction or evaluating an assembler
+    expression to refer to the contents of a variable, use the
+    name of the variable alone or between brackets:
+
+            mov ax,[a]
+            mov dx,a
+
+    To refer to the address of the variable, use the OFFSET
+    operator:
+
+            mov ax,offset a
+
+178 Add the "Empty" local menu command: "Empty" sets the value of
+    the currently highlighted register to empty. This is a
+    special status that indicates that the register no longer
+    contains valid data.
+
+183 The Shift-arrow keys move between the panes in a window. The
+    pane in the direction of the arrow becomes the active pane.
+
+195 The description for the shifted arrow keys in the table on
+    this page should be
+
+    Key                Function
+   -----------------------------------------------------------
+    Shift-Up arrow     Resizes window - Moves bottom up
+    Shift-Down arrow   Resizes window - Moves bottom down
+    Shift-Left arrow   Resizes window - Moves right side left
+    Shift-Right arrow  Resizes window - Moves right side right
+
+199 The "Save Options..." menu command has three options that
+    control which part of the configuration gets saved (see the
+    entry for p59):
+
+    All
+    Macros
+    Layout
+
+226 In the last line of first paragraph under "Starting Turbo
+    Debugger," change Alt-F L to Ctrl-F2.
+
+227 In the fifth line of the third paragraph, replace "wordcount"
+    with "charcount."
+
+228 In the first line of the second paragraph under Eureka!,
+    change Alt-F L to Ctrl-F2. Do the same for the third
+    paragraph, fourth line.
+
+238 Change "1024 bytes of DOS env" to "256 bytes of DOS env".
+
+239 Change the discription of -w to say "You can enter a new
+    executable file name that does not already exist and TD386
+    will create the new executable file."
+
+244 The -vb option no longer exists as a command-line option.
+
+249 Add a section: "TDRF Remote File Transfer Utility"  You can
+    enter a new executable file name that does not have to
+    already exist. TDRF will create the new executable file.
+
+250 In the first paragraph, add: "The wild cards * and ? can
+    be used with the COPY, COPYFROM, DEL, and DIR commands that
+    follow.
+
+    Change the explanation for COPY to "Copies files from the
+    local system to the remote system. You can..."
+
+    The explanation for COPYFROM should read: "Copies files from
+    the remote system to the local system. The single..." An
+    additional example is
+
+    TDRF F TC*.* A:\TCDEMO
+
+    which copies all files beginning with TC on the current
+    directory of the remote system to the local system's drive A,
+    subdirectory TCDEMO.
+
+251 At the bottom of the page, change FILE2 to TEST2.
+
+255 Add: If you specify the -c option, the input .EXE file is
+    converted into a .COM file. If you use -c in conjunction with
+    -s, you can convert an .EXE file with symbols into a .COM
+    file with a separate .TDS symbol file. This lets you debug
+    .COM files with Turbo Debugger while retaining full debugging
+    information.
+
+    You can only convert certain .EXE files into .COM files. The
+    same restrictions apply to the -c option of TDSTRIP as to the
+    /t option of TLINK: Your program must start at location 100
+    hex, and it can't contain any segment fixups.
+
+275 Under "The User Screen Updating Option," add to the
+    discussion under "Swap": "Also, use the Swap option if you
+    Shell out to DOS and run other utilities or if you have a TSR
+    (such as SideKick) loaded.
+
+277 "43/50 line mode startup" is now called "Screen Lines." Also,
+    line one of the explanation should read: "Press S to...."
+
+279 Add to "Key for Interrupt": You choose the key for interrupt
+    by directly pressing the key combination that you wish to
+    use. You can use any combination of the Left-Shift, Right-
+    Shift, Alt, and Ctrl keys, along with a normal keyboard
+    character like a letter, function key, etc. For example,
+
+         Shift-Alt-F1
+         Left shift-Right shift-Spacebar
+
+    On extended 101-key keyboards, Turbo Debugger does not
+    distinguish between the left and right Alt keys or the left
+    and right Ctrl keys. The left and right shift keys are still
+    treated distinctly.
+
+282 TDINST now has a separate Save and Quit command on the main
+    menu. If you select Save, a menu appears that lets you choose
+    between saving the configuration directly to the Turbo
+    Debugger executable program file TD.EXE, or to a
+    configuration file.
+
+    If you choose to save to a configuration file, a prompt
+    appears initialized to the default configuration file
+    TDCONFIG.TD. You can accept this name by pressing Enter or
+    you can type a new configuration file name. If you specify a
+    different file name, you can load that configuration by using
+    the -c command-line option when you start Turbo Debugger, for
+    example,
+
+          td -cmycfg myprog
+
+    You can also use the Options/Restore Configuration command to
+    load a configuration once you have started Turbo Debugger.
+
+284 Bottom of page: You can use data watching with breakpoints
+    that are not longer than 4 bytes
+
+286 Middle of page: Change  "MOV AL,[1234]" to "MOV AX,[1234]".
+
+301 Add: "You can enter a new executable file name that does not
+    already exist. TDREMOTE will create the new executable file."
+

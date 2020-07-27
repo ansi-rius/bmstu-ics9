@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html style ='background:#8D90D9; font-size: large;'>
+    <style type='text/css'> td { text-align: center; padding: 5px; font-size: large; height: 30px; width: 50px; overflow: auto; border: 4px solid #1E006F;} </style>
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ .Title}}</title>
+    </head>
+    <body>
+        <p style="color:#024a96;font-size: xx-large" align="center" width="250">{{ .Title}}</p>
+     	<!-- <table style="background:#B6CEFF; border-collapse: collapse; border: 5px solid #1E006F;" align="center" text-align="center" height="700" width="1000" cols="1"> -->
+         {{range .Items}}
+		
+               <!-- <td>{{ .Ref}}</td> -->				
+                <p>{{ .Title}}</p>
+                <p>{{ .Message}}</p>
+                <p>{{ .Date}}</p>
+		
+         {{end}}
+	
+    </body>
+</html>

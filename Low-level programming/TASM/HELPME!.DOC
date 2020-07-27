@@ -1,0 +1,345 @@
+TURBO DEBUGGER 1.0: COMMON QUESTIONS AND ANSWERS
+------------------------------------------------
+
+  Q. How does TD handle screen output for graphics- and text-based
+     programs?
+
+  A. Turbo debugger has a number of strategies that it can use to
+     control how and when the screen gets refreshed. If you are
+     debugging a program that uses a graphics display mode or if
+     you want to use Borland pop-up utilities such as SideKick
+     and SideKick Plus while inside Turbo Debugger, you should
+     review the following hints.
+
+     The default screen-updating mode is "Flip," meaning that
+     Turbo Debugger uses an alternate video display page on
+     adapters that support multiple display pages. This results
+     in fast screen-swapping between Turbo Debugger and your
+     program, but it also can interfere with the operation of
+     pop-up utilities and graphics programs.
+
+     Pop-up utilities may not appear on the screen, even though
+     they are active and processing your keystrokes. You must
+     select "Swap" mode for display-updating in order for pop-ups
+     to work properly. Use Turbo Debugger's -ds command-line
+     option to do this, or use the TDINST utility to permanently
+     set this mode. "Swap" mode makes screen updating slower, but
+     it makes sure that Turbo Debugger's screen does not
+     interfere with either your program's or any pop-up's
+     display.
+
+     You may also need to use "Swap" when you use the OS Shell
+     command or run an editor from within TD. Most programs
+     expect to run on video page 0, and do not check to see what
+     the current video page is. TD's OS Shell and any editors
+     that TD runs in "Flip" mode do not run from video page 0,
+     and the programs may appear to hang, even though you will be
+     able to type in keystrokes normally. If this happens, use
+     the -ds command-line option when you run TD or reinstall TD
+     to use "Swap" instead of "Flip."
+
+     If you are debugging a graphics mode application, you must
+     specify the -ds command-line option ("Swap" contents) and
+     youÿmay want to use Turbo Debugger's -vg command-line
+     option (Graphics Save). This causes additional memory to be
+     set aside for saving the entire graphics image that your
+     program produces. If you don't use this option, a "red
+     cloud" may appear on your program's screen. These options
+     can also be set permanently by using the TDINST program.
+     The Graphics Save option takes an additional 8K of memory
+     and slows screen-swapping.
+
+     If you are running a graphics progrÿm that changes the EGA
+     palette, make sure that you use the -vp command line option
+     to save the palette.
+
+  Q. Can Turbo Debugger execute other programs while you are
+     still using the debugger?
+
+  A. The OS Shell and Edit commands in the Module and File
+     windows can swap the program you are debugging to disk in
+     order to make room to run DOS or your editor. The default
+     amount of memory to swap is 128K. You can use TDINST to set a
+     different amount if that's not enough memory to run your
+     editor or other programs. Setting the swap size to 0K tells
+     Turbo Debugger to swap the entire user program to disk
+     before running the DOS command processor.
+
+     Only your program gets swapped to disk, Turbo Debugger
+     remains in memory.
+
+  Q. How can I break out of a program even though interrupts are
+     disabled?
+
+  A. If you have an 80386-chip-based computer and are using
+     TD386, option -B allows break even when interrupts are
+     disabled. For example, this option enables a break from
+
+       CLI
+       JMP $
+
+  Q. Why can't I hit Ctrl-Break to get out of a program
+     running on a remote machine?
+
+  A. The program running in the remote machine has taken control
+     of Interrupt 1B (Ctrl-Break), TDREMOTE does not take back
+     control of Interrupt 1B until you stop execution of the
+     running program on the debugger side by completing the
+     program or hitting Ctrl-F2 (Program Reset).
+
+
+  Q. What are some of the syntactic and parsing differences
+     between Turbo Debugger's built-in assembler and the
+     standalone Turbo Assembler?
+
+  A. The following short example program is discussed in the
+     text that follows it:
+
+              .model small
+              .data
+
+       abc    struc
+       mem1   dd      ?
+       mem2   db      ?
+       mem3   db      "   "
+       abc    ends
+
+              align   16
+       a      abc     <1,2,"xyz">
+
+       msg1   db      "testing 1 2 3", 0
+       msg2   db      "hello world", 0
+       nmptr  dw      msg1
+       fmptr  dd      msg1,msg2
+       nfmptr dw      fmptr
+       xx     dw      seg a
+
+              .code
+
+              push   cs
+              pop    ds
+              mov    bx,offset a
+              mov    bx,nmptr
+              les    si,fmptr
+              mov    ah,4ch
+              int    21h
+              end
+
+     The assembler expression parser does not accept all legal
+     TASM instruction operands. This allows TD's assembler
+     expressions to be more general and allow multiple levels of
+     memory-referencing, more like that used in C and Pascal.
+     However, there are a few constructs that you may be used to
+     using that you will have to specify differently for the TD
+     assembler expression parser to accept them:
+
+       a. Size overrides should always appear inside the
+          brackets; PTR is optional after the size. Also, when
+          referring to a structure, you must use the name of the
+          struc, not the name of the variable:
+
+          CORRECT:  [byte ptr bx]   [dword si]        [abc bx]
+
+          INCORRECT: byte ptr[bx]    [struc abc bx]    [a bx]
+
+       b. You must specify a structure name when accessing the
+          members of a structure via a register pointer:
+
+          CORRECT:  [abc ptr bx].mem1  [abc bx].mem3 + 1
+
+          INCORRECT: [bx].mem1
+
+       c. You can't use multiple instances of [] unless they are
+          adjacent, and you can only follow an [] expression with
+          a dot and a structure member name or another []
+          expression:
+
+          CORRECT:  4[bx][si]    [abc bx].mem2
+
+          INCORRECT: [bx]4[si]    [bx]+4
+
+       d. If you use a register as part of a memory expression
+          and you don't specify a size, WORD is assumed:
+
+            [bx] is the same as [word bx]
+
+       e. You can use any register you want between [], not just
+          the combinations of BX, BP, SI, and DI allowed in
+          instruction operands:
+
+          CORRECT:  [ax+bx]   [bx+sp]
+
+       f. You can use multiple levels of [] to follow chains of
+          pointers:
+
+          CORRECT:  [byte [[nfmptr]+4]]
+
+       g. Be careful using registers to access memory locations.
+          You may get unexpected results if your segment
+          registers are not set up properly. If you don't
+          explicitly specify a segment register, Turbo Debugger
+          uses the DS register to reference memory.
+
+       h. When you do specify a segment register, make sure that
+          you follow the same rule as for size overrides: put it
+          INSIDE the brackets:
+
+          CORRECT:  [byte es:di]    [es:fmptr]
+
+          INCORRECT: es:[byte di]
+
+       i. Use the OFFSET operator to get the address of a
+          variable or structure. Turbo Debugger automatically
+          supplies the [] around a variable name if you just type
+          the variable name alone:
+
+            a            contents of structure a
+            [a]          contents of structure a
+            offset a     address of structure a
+
+       j. You can use the type overrides and the format control
+          count to examine any area of memory displayed as you
+          wish:
+
+            [byte es:bx],10  10 bytes pointed to by es:bx
+            [dword ds:si],4  4 dwords pointed to by ds:si
+
+          This is very useful when specifying watch expressions.
+
+       k. Sometimes you use a word memory location or register to
+          point to a paragraph in memory that contains a data
+          structure. Access the structure with expressions like:
+
+            [abc [xx]:0].mem1
+            [abc es:0].mem3
+
+  Q. Are there any syntactic or parsing differences between Turbo
+     Debugger's C expression evaluation and Turbo C's?
+
+  A. You can't pass constant-string arguments when evaluating
+     functions.
+
+     CORRECT:  myfunc(123)   myfunc(string_variable)
+
+     INCORRECT:  myfunc("constant")
+
+  Q. Are there any syntactic or parsing differences between Turbo
+     Debugger's Pascal expression evaluation and Turbo Pascal's?
+
+  A. The differences are:
+
+     a. Turbo Debugger does not support expressions for set
+        constructors:
+
+        CORRECT:   [4..7]
+
+        INCORRECT: [myvar1..myvar2]   [3+4..7+8]
+
+     b. You can't pass constant-string arguments when evaluating
+        functions or procedures.
+
+        CORRECT:   MyFunc(123)   MyFunc(StringVariable)
+
+        INCORRECT: MyFunc('Constant')
+
+                MyFunc(StringConstant), where StringConstant is
+                defined with a "const" declaration and is not a
+                typed constant.
+
+     c. You can't evaluate procedures or functions that have
+        structure VALUE parameters. You can evaluate procedures or
+        functions that have structure VARIABLE parameters, though.
+
+  Q. What should I be aware of when I am debugging multi-language
+     programs with Turbo Debugger?
+
+  A. Turbo Debugger's default source language is "Auto," meaning
+     that it chooses the expression language based on the current
+     source module. This can cause some confusion if your program
+     has source modules written in different languages (like C
+     and assembler). Since you are actually entering a language
+     expression any time that Turbo Debugger prompts you for a
+     value or an address, this can cause some unexpected results:
+
+     a. Even if you are in a CPU window or a Dump window, you
+        must still enter addresses in the source language,
+        despite the fact that the window is displaying in hex.
+        For example, to display the contents of memory address
+        1234:5678, you must type one of the following
+        expressions, depending on your current source language:
+
+          C            0x1234:0x5678
+          Pascal        $1234:$5678
+          Assembler      1234:5678
+
+     b. When your current language is assembler, you must be
+        careful when entering hex numbers, since they are
+        interpreted EXACTLY as they would be in an assembler
+        source file. This means that if you want to enter a
+        number that starts with one of the hex digits A - F, you
+        must first precede the letter with a 0 so Turbo Debugger
+        knows that you are entering a number. Likewise, if your
+        number ends in B or D (indicating a binary or decimal
+        number), you must add an H to indicate if you really want
+        a hex number:
+
+        CORRECT:    0aaaa   123dh   89abh
+
+        INCORRECT:  aaaa    123d    89ab
+
+  Q. Why does the text "Cannot be changed" come up when I do an
+     assignment in the Data/Evaluate/Modify "New value" pane?
+
+  A. If you use the Data/Evaluate/Modify command (Ctrl-F4) to
+     change a variable by direct assignment, the "New value" pane
+     will say "Cannot be changed." This does not mean that the
+     assignment did not take effect. Instead it means that the
+     assignment expression as a whole is not a memory-referencing
+     expression whose value you can change by moving to the
+     bottom pane. Here are some examples of direct assignment
+     expressions:
+
+       C              x = 4
+       Pascal         ratio := 1.234
+       Assembler      wval = 4 shl 2
+
+     If you had typed just "x," "ratio," or "wval" into the top
+     pane, then you would be able to move to the bottom pane and
+     enter a new value. The direct assignment method using the
+     "=" or ":=" assignment operator is quicker and more
+     convenient if you don't care about examining the value of
+     the variable before modifying it.
+
+  Q. Why does an inspector occasionally display question marks
+     when inspecting a Turbo C register variable?
+
+  A. If you inspect a register variable that is not in the
+     current scope, you'll see ???? for the value. A register
+     variable only displays a value if the register is in your
+     current scope (valid at the current location in your
+     program).
+
+  Q. What is the most likely reason for Turbo Debugger to hang
+     when starting up on a PC-compatible computer?
+
+  A. If your computer is a Tandy 1000A, IBM PC Convertible, or
+     NEC MultiSpeed, or if TD hangs when loading on your system,
+     run TDINST and change the last item in the Options menu so
+     that NMI Intercept is set to "No." Some computers use the
+     NMI (Non-Maskable Interrupt) in ways that conflict with TD,
+     so you must disable TD's use of this interrupt in order to
+     run the program.
+
+     Also, if you are using a 80386-based machine and have the
+     SuperKey utility loaded, be careful not to press a key when
+     TD386 is loading, since SuperKey may capture the keystroke
+     and cause unexpected results.
+
+  Q. Why do I get the message "Cannot run TD386: processor is
+     already in V8086 mode"?
+
+  A. You have installed a program or device driver that uses the
+     80386's virtual-8086 mode (eg. 386^MAX, CEMM, QEMM). You
+     will have to disable or de-install those programs or device
+     drivers to be able to run TD386.
+

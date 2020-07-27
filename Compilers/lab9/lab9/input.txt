@@ -1,0 +1,8 @@
+public class A{
+
+public metod(){}
+
+public class B{class C{}}
+
+
+}

@@ -1,0 +1,382 @@
+                  WELCOME TO TURBO DEBUGGER 1.0
+                  -----------------------------
+
+This README file contains important, last minute information
+about Turbo Debugger 1.0. The HELPME!.DOC file on the TURBO
+DEBUGGER/INSTALLATION disk also answers many common Technical
+Support questions.
+
+
+TABLE OF CONTENTS
+-----------------
+
+  1.  How to get Help
+  2.  Installation
+  3.  Important Additions
+  4.  Notes and Restrictions
+  5.  Manual Additions and Corrections
+  6.  Files on the Disks
+
+
+1. HOW TO GET HELP
+------------------
+
+  If you have any problems, please read this file, the
+  HELPME!.DOC file, and the Turbo Debugger manual first. If you
+  still have a question and need assistance, help is available
+  from the following sources:
+
+  1. Type GO BOR on the CompuServe bulletin board system for
+     instant access to the Borland forums with their libraries of
+     technical information and answers to common questions.
+
+     If you are not a member of CompuServe, see the enclosed special
+     offer, and write for full details on how to receive a free
+     IntroPak containing a $15 credit toward your first month's on-
+     line charges.
+
+  2. Check with your local software dealer or users' group.
+
+  3. Write to us at the following address:
+
+     Borland International
+     Turbo Debugger Technical Support
+     1800 Green Hills Road
+     P.O. Box 660001
+     Scotts Valley, CA  95066-0001
+
+     Please remember to include your serial number or we will be
+     unable to process your letter.
+
+  4. If you have an urgent problem that cannot wait and you have sent
+     in the license agreement from the front of your manual, you may
+     call the Borland Technical Support Department at (408) 438-5300.
+     Please have the following information ready before calling:
+
+     a. Product name and serial number on your original distribution
+        disk.  Please have your serial number ready or we will be
+        unable to process your call.
+
+     b. Product version number. The version number for Turbo
+        Debugger is displayed when you first load the program and
+        before you press any keys.
+
+     c. Computer brand, model, and the brands and model numbers of
+        any additional hardware.
+
+     d. Operating system and version number. (The version number can
+        be determined by typing VER at the MSDOS prompt.)
+
+     e. Contents of your AUTOEXEC.BAT file.
+
+     f. Contents of your CONFIG.SYS file.
+
+2. INSTALLATION
+---------------
+
+This disk contains a program called INSTALL.EXE that will assist
+you with the installation of Turbo Debugger 1.0. There are three
+options for installation:
+
+  1. Hard Disk - INSTALL will copy all Turbo Debugger files onto
+     your hard disk and put them into subdirectories. The default
+     subdirectories are
+
+       Turbo Debugger Directory:                    C:\TD
+       Example Subdirectory:                        C:\TD
+
+     By default, all files from the distribution disks are placed
+     in the Turbo Debugger Directory. If you would rather
+     separate the examples programs into their own subdirectory
+     as well, edit the default example files path before
+     selecting START INSTALLATION.
+
+  2. Floppy Disk - This option will build a working Turbo
+     Debugger 4-disk set that will work on a two drive system. Be
+     sure to have four formatted disks ready before you start.
+     Install will build
+
+       Program Disk - Turbo Debugger main program, Readme file,
+       Turbo Debugger customization program, Helpme file and
+       Manual file.
+
+       Work Disk - Turbo Debugger working overlay file and help
+       file.
+
+       Utilities Disk - Turbo Debugger utilities.
+
+       Examples Disk - Example programs for use with Turbo
+       Debugger.
+
+To start the installation, change your current drive to the one
+that has the install program on it and type INSTALL. You will be
+given instructions in a box at the bottom of the screen for each
+prompt. For example, if you will be installing from drive A:, you
+would type
+
+  A:
+  INSTALL
+
+You should read the rest of this README file to get further
+information about this release before you do the installation.
+
+The Turbo Debugger UTILITIES/EXAMPLES distribution disk contains
+several files with an .ARC file extension: TDEXAMPL.ARC,
+TAEXAMPL1.ARC, and TAEXAMPL2.ARC. These files contain several
+other files that have been compressed and placed inside an
+archive. You can dearchive them yourself by using the UNPACK.COM
+utility.
+
+For example,
+
+  unpack tdexampl
+
+unpacks all the files stored in the TDEXAMPL.ARC archive into the
+current directory.
+
+INSTALL gives you a choice of copying the .ARC files intact or
+dearchiving and copying all of the individual files onto your
+hard disk during the installation process. Note that INSTALL does
+not unpack the TAEXAMPL1.ARC, TAEXAMPL2.ARC, or CHAPXMPL.ARC files
+from the UTILITIES/EXAMPLES disk. These files contain example
+programs for the TURBO ASSEMBLER.
+
+If you have difficulty reading the text displayed by the INSTALL
+program, it accepts an optional command-line parameter that forces
+it to use black and white colors:
+
+  a:install /B      - Forces INSTALL into BW80 mode
+
+Specifying the /B parameter may be necessary if you are using an
+LCD screen or a system that has a color graphics adapter and a
+monochrome or composite monitor.
+
+
+3. IMPORTANT ADDITIONS
+----------------------
+
+  3.1 Changes to the command-line options for TD
+  ----------------------------------------------
+
+  -h   a list of all the command-line options available for TD.EXE
+
+  -c   lets you specify a configuration file that will be loaded at
+       startup. By default, Turbo Debugger uses the configuration
+       file TDCONFIG.TD (if found); if you give the -c<file> option,
+       Turbo Debugger will use that file instead.
+
+       You must supply a configuration file name after the -c,
+       with no space between the -c and the file name, for
+       example,
+
+         TD -cmyconfig myprog
+
+       If you don't supply an extension to the file name, Turbo
+       Debugger adds the .TD extension.
+
+  -m   If you specify a heap size of 0 with the -m command-line
+       option (-m0), Turbo Debugger will use the maximum that it's
+       able to use, 64K. Specifying a value larger than 64K may
+       cause unexpected results.
+
+  -vp  Enable EGA palette save.
+
+       This new command-line option controls palette swapping on
+       EGA video adapters. It is only recommended when the user
+       program modifies the EGA palette registers. When -vp is
+       specified, the EGA palette is restored each time the
+       screen is swapped. In general, you don't need to use this
+       option unless your program modifies the EGA palette
+       registers, or unless your program uses BGI to change the
+       palette.
+
+
+  3.2 Changes to the command-line options for TD utilities
+  --------------------------------------------------------
+
+  For a list of all the command-line options available for
+  TDINST.EXE, TDREMOTE.EXE, INSTALL.EXE, and TDNMI.COM, enter
+  the program name followed by -h:
+
+    <program name> -h.
+
+  For a list of all the command-line options available for
+  TDMAP.EXE, TDPACK.EXE, TDRF.EXE, TDSTRIP.EXE, TDCONVRT.EXE,
+  TD386.EXE and TDUMP.EXE, just type the program name:
+
+    <program name>
+
+  Note: If you have an 80386-based machine and want to read the
+  command-line options for TD386.EXE, TDH386.SYS must be loaded.
+
+
+  3.3  TD.OVL
+  -----------
+
+  Turbo Debugger consists of an executable program, TD.EXE, and
+  an overlay file, TD.OVL. Both files are required.  On a hard
+  disk system, they should be put in the same directory.
+
+  If you are running on a two-floppy system, you should put the
+  overlay file (TD.OVL) and the help file (TDHELP.TDH) on one
+  diskette and TD.EXE on another diskette. To start Turbo
+  Debugger, you insert the disk containing TD.EXE and type "TD"
+  on the command line. You will then be prompted to insert the
+  diskette containing the overlay file.
+
+  Once you have inserted the overlay diskette, don't remove it
+  for the remainder of your debugging session.
+
+
+  3.4  TDNMI.COM UTILITY
+  ----------------------
+
+  If you are using a breakout switch on a PC clone that disables
+  the NMI interrupt (such as some PC's Limited systems), you will
+  need to install the TDNMI resident utility to clear the NMI every
+  half second.
+
+  Use TDNMI with the /p option if you have a Periscope I board
+  and wish to use its breakout switch with Turbo Debugger. TDNMI
+  will then periodically reset the breakout-switch latch on the
+  Periscope board.  Use the /p command-line option followed by a
+  hex address to set the board's base address if it is different
+  from the default address of 300.
+
+
+  3.5 Additions to hardware device driver interface
+  -------------------------------------------------
+
+  o The "Get Hardware Capabilities" status block returned by the
+    device driver has an additional field that it returns after
+    the "Maximum data match length field." This field is 2 bytes
+    long and specifies the segment address where Turbo Debugger
+    must write a byte with a value of 1 to enable hardware
+    breakpoints. The field must contain 0 if the device driver
+    does not or cannot support this capability. If supported,
+    this byte allows Turbo Debugger to inform the device driver
+    that it has finished writing things to the address space of
+    the program being debugged, and that subsequent accesses can
+    cause hardware breakpoints.
+
+  o The special value FE (hex) can be returned by the hardware
+    device driver if it has been recursively entered while
+    processing a hardware breakpoint. This can happen if a
+    hardware breakpoint has been set in the 6 bytes below the
+    current top of stack in the program being debugged. If Turbo
+    Debugger receives this entry code, it displays a message that
+    the device driver can't proceed because of a breakpoint being
+    set near the top of the stack.
+
+  3.6 Extensions to the built-in assembler in the CPU window
+  ----------------------------------------------------------
+
+  Turbo Debugger supports all 80386 and 80387 instructions
+  mnemonics and registers:
+
+    80386 Registers:
+
+      EAX, EBX, ECX, EDX, ESI, EDI, EBP, ESP
+
+    80386 Op Codes:
+
+      BSF, BSR, BT, BTC, BTR, BTS, CDQ, CWDE, IRETD, LFS, LGS,
+      LSS, MOVSX, MOVZX, POPAD, POPFD, PUSHAD, PUSHFD, SETA,
+      SETB, SETBE, SETE, SETG, SETL, SETLE, SETNB, SETNE,
+      SETNL, SETNO, SETNP, SETNS SETO, SETP, SETS, SHLD, SHRD,
+      CMPSD, STOSD, LODSD, MOVSD, SCASD, INSD OUTSD, JECXZ
+
+    80387 Op Codes:
+
+      FCOS, FSIN, FPREM1, FSINCOS, FUCOM, FUCOMP, FUCOMPP
+
+
+4. NOTES AND RESTRICTIONS
+-------------------------
+
+o You need to set the files directive in your CONFIG.SYS file to
+  at least FILES = 10, preferably FILES = 20. If you have trouble
+  doing the File/OS Shell command or if TD can't find your source
+  modules, make sure the FILES directive is in your CONFIG.SYS.
+
+o FNxxxx variants of floating-point instructions are not
+  supported in the built-in assembler in the CPU window.
+
+  The Fxxxx instructions do not generate an FWAIT in Turbo
+  Debugger. You must manually code an FWAIT before floating-point
+  instructions if needed.
+
+o A single Ctrl-Break when inside a DOS function call waiting for
+  console input will not interrupt DOS and return control to
+  Turbo Debugger. You can either press Ctrl-Break once and then
+  end the console input function by pressing Enter, or you can
+  press Ctrl-Break a second time.  You will then interrupt DOS and
+  Turbo Debugger will bring up a CPU Viewer showing code inside
+  DOS.  At this point, you can look around inside your program,
+  but you may not be able to use F7 or F8 to trace or step inside
+  DOS.  You should only use F9 at this point, after possibly
+  setting a breakpoint inside your program.
+
+o TD386 uses INT FF to communicate with its protected-mode
+  supervisor. Therefore, you can't debug programs with TD386 that
+  use INT FF. If your program uses INT FF, change to using a
+  different interrupt (e.g., INT FE) while you are debugging your
+  program under TD386.
+
+
+5.  MANUAL ADDITIONS AND CORRECTIONS
+------------------------------------
+
+Additions and corrections to the Turbo Debugger User's Guide that
+were made after it went to print are listed in MANUAL.DOC on the
+Turbo Debugger Help/Utilities Disk. We recommend that you read
+MANUAL.DOC and make the appropriate corrections in the Turbo
+Debugger User's Guide. You may use the README.COM utility supplied
+with Turbo Debugger to read this file by typing, for example,
+
+  README MANUAL.DOC
+
+
+6. FILES ON THE DISKS
+---------------------
+
+  TURBO DEBUGGER/INSTALLATION
+  ---------------------------
+  INSTALL  EXE  - Installs Turbo Debugger on your system
+  README   COM  - Program to display README file
+  TD       EXE  - Turbo Debugger Program
+  TD       OVL  - Turbo Debugger Program Overlay
+  HELPME!  DOC  - Text file with the answers to many common
+                  questions. Please read HELPME!.DOC before
+                  contacting Technical Support
+  README        - This file!
+
+  HELP/UTILITIES
+  --------------
+  TDHELP   TDH  - Turbo Debugger Help File
+  TDINST   EXE  - Configuration Customization program
+  TDMAP    EXE  - Utility to extract debug information from .MAP
+                  files
+  TDUMP    EXE  - Utility to dump executable and object files
+  TDRF     EXE  - Remote file transfer utility
+  TDREMOTE EXE  - Remote debugging kernel
+  TD386    EXE  - Utility for 80386 virtual debugging
+  TDH386   SYS  - Device driver for TD386.EXE and the 80386 debug
+                  registers
+  TDSTRIP  EXE  - Utility to strip debug information off
+                  executable files
+  MANUAL   DOC  - Text file listing additions and corrections
+                  to the User's Guide
+
+  UTILITIES/EXAMPLES
+  ------------------
+  TDCONVRT EXE  - Utility to convert CodeView information to Turbo
+                  Debugger information
+  TDPACK   EXE  - Utility to compress debug information
+  TDNMI    COM  - TSR to clear NMI every half second
+  UNPACK   COM  - Utility to unpack .ARC files
+  TDEXMPL  ARC  - Packed file that contains Turbo Debugger examples
+  TAEXMPL1 ARC  - Packed file that contains Turbo Assembler examples
+  TAEXMPL2 ARC  - Packed file that contains Turbo Assembler examples
+  CHAPXMPL ARC  - Packed file that contains Turbo Assembler examples
+
