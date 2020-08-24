@@ -1,0 +1,3 @@
+[submodule "Parallel"]
+	path = Parallel
+	url = https://github.com/ansi-rius/DevOfParallelAndDistrProgLab2
