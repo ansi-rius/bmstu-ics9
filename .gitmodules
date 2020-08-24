@@ -1,3 +1,21 @@
 [submodule "Parallel"]
 	path = Parallel
 	url = https://github.com/ansi-rius/DevOfParallelAndDistrProgLab2
+[submodule "Parallel and distribued programms/lab2_git"]
+	path = Parallel and distribued programms/lab2_git
+	url = https://github.com/ansi-rius/DevOfParallelAndDistrProgLab2
+[submodule "Parallel and distribued programms/lab3_git"]
+	path = Parallel and distribued programms/lab3_git
+	url = https://github.com/ansi-rius/DevOfParallelAndDistrProgLab3
+[submodule "Parallel and distribued programms/lab4_git"]
+	path = Parallel and distribued programms/lab4_git
+	url = https://github.com/ansi-rius/DevOfParallelAndDistrProgLab4
+[submodule "Parallel and distribued programms/lab5_git"]
+	path = Parallel and distribued programms/lab5_git
+	url = https://github.com/ansi-rius/DevOfParallelAndDistrProgLab5
+[submodule "Parallel and distribued programms/lab6_git"]
+	path = Parallel and distribued programms/lab6_git
+	url = https://github.com/ansi-rius/DevOfParallelAndDistrProgLab6
+[submodule "Parallel and distribued programms/lab7_git"]
+	path = Parallel and distribued programms/lab7_git
+	url = https://github.com/ansi-rius/DevOfParallelAndDistrProgLab7
